@@ -20,8 +20,8 @@ You can find the deployed project at [Heroku](https://labspt12-express-groomer-a
 ### Key Features
 
 - Connects groomers with pet owners
-- Secure online payments via Stripe
-- Log in using social accounts (Google, Facebook)
+- Secure online payments via Stripe (WIP)
+- Log in using social accounts (Google, Facebook)(WIP)
 
 #### Back end deployed to [Heroku](https://labspt12-express-groomer-a-api.herokuapp.com)
 
