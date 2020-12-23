@@ -1,5 +1,7 @@
 const request = require('supertest');
 const express = require('express');
+const Profiles = require('../../api/groomer/groomerModel');
+const profileRouter = require('../../api/groomer/groomerRouter');
 const Groomers = require('../../api/groomers/groomersModel');
 const groomersRouter = require('../../api/groomers/groomersRouter');
 const server = express();
@@ -31,6 +33,24 @@ describe('groomers router endpoints', () => {
 
   describe('GET /groomers/:id', () => {
     it('should return 200 when profile found', async () => {
+      Profiles.findById.mockResolvedValue({
+        id: '1',
+        description: 'sadfasdfasdfasdf asdfasdfasd asdfasd asdfasdfsdf',
+        name: 'Bob',
+        lastname: 'Smith',
+        address: '23 Martha Smith',
+        zip: '234234',
+        phone: '4355252345',
+        email: 'bob@example.com',
+        city: 'Atlanta',
+        state: 'Georgia',
+        country: 'USA',
+        photo_url: 'somewhere.com/photo.jpg',
+        walk_rate: '2345',
+        day_care_rate: '12345',
+        vet_visit_rate: '2000',
+
+
       Groomers.findById.mockResolvedValue({
         id: 1,
         name: 'Louie',
@@ -51,6 +71,8 @@ describe('groomers router endpoints', () => {
       const res = await request(server).get('/groomers/1');
 
       expect(res.status).toBe(200);
+      expect(res.body.name).toBe('Bob');
+      expect(Profiles.findById.mock.calls.length).toBe(1);
       expect(res.body.name).toBe('Louie');
       expect(res.body.lastname).toBe('Smith');
       expect(res.body.address).toBe('23 Hellen Rd');
@@ -75,6 +97,14 @@ describe('groomers router endpoints', () => {
     });
   });
 
+  describe('POST /profile', () => {
+    it('should return 200 when profile is created', async () => {
+      const profile = {
+        name: 'Louie',
+        lastname: 'Smith',
+        email: 'louie@example.com',
+        photo_url:
+          'https://s3.amazonaws.com/uifaces/faces/twitter/hermanobrother/128.jpg',
   describe('POST /groomers', () => {
     it('should return 201 when profile is created', async () => {
       const groomer = {
@@ -105,6 +135,10 @@ describe('groomers router endpoints', () => {
 
   describe('PUT /groomers', () => {
     it('should return 200 when profile is created', async () => {
+      const profile = {
+        id: 'd376de0577681ca93614',
+        name: 'Louie',
+        lastName: 'Smith',
       Groomers.findById.mockResolvedValue({
         id: 1,
         name: 'Louie',
@@ -114,6 +148,8 @@ describe('groomers router endpoints', () => {
         zip: '23442552',
         phone: '3453556636',
         email: 'louie@example.com',
+        photo_url:
+          'https://s3.amazonaws.com/uifaces/faces/twitter/hermanobrother/128.jpg',
         city: 'Atlanta',
         state: 'Georgia',
         country: 'USA',
@@ -130,6 +166,9 @@ describe('groomers router endpoints', () => {
 
       const res = await request(server).put('/groomers/1').send(groomer);
       expect(res.status).toBe(200);
+      expect(res.body.profile.name).toBe('Louie');
+      expect(res.body.profile.lastname).toBe('Smith');
+      expect(Profiles.update.mock.calls.length).toBe(1);
       expect(res.body.name).toBe('OtherName');
       expect(Groomers.update.mock.calls.length).toBe(1);
     });
