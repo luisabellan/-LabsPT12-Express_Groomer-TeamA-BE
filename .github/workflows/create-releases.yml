@@ -2,9 +2,7 @@ name: Create releases
 on:
   release:
     types: [published]
-  push:
-    branches:
-      - main
+
 jobs:
   update-heroku-env-variable:
     runs-on: ubuntu-latest
