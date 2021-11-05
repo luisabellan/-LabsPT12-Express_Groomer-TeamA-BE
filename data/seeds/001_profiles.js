@@ -1,12 +1,14 @@
 const faker = require('faker');
-
 const profiles = [...new Array(100)].map((i, idx) => ({
-  id: idx === 0 ? '00ulthapbErVUwVJy4x6' : faker.random.alphaNumeric(20),
+  id:
+    idx === 0
+      ? 'https://dev-28839849.okta.com::Paul_Welch45@yahoo.com'
+      : faker.random.alphaNumeric(20),
   avatarUrl: faker.image.avatar(),
-  email: idx === 0 ? 'llama001@maildrop.cc"' : faker.internet.email(),
+  email: idx === 0 ? 'Paul_Welch45@yahoo.com' : faker.internet.email(),
   name:
     idx === 0
-      ? 'Test001 User'
+      ? 'Paul Welch'
       : `${faker.name.firstName()} ${faker.name.lastName()}`,
 }));
 
